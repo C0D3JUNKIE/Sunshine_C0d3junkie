@@ -21,6 +21,7 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.LoaderManager.LoaderCallbacks;
+import android.support.v4.content.AsyncTaskLoader;
 import android.support.v4.content.Loader;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -158,17 +159,59 @@ public class MainActivity extends AppCompatActivity implements ForecastAdapterOn
 
     @Override
     public Loader<String[]> onCreateLoader(int id, Bundle args) {
-        return null;
+
+        return new AsyncTaskLoader<String[]>(this) {
+
+            String[] mWeatherData = null;
+
+            @Override
+            protected void onStartLoading() {
+                if(mWeatherData != null){
+                    deliverResult(mWeatherData);
+                }else{
+                    mLoadingIndicator.setVisibility(View.VISIBLE);
+                    forceLoad();
+                }
+            }
+
+            @Override
+            public String[] loadInBackground() {
+
+                String locationQuery = SunshinePreferences.getPreferredWeatherLocation(MainActivity.this);
+                URL weatherRequestUrl = NetworkUtils.buildUrl(locationQuery);
+
+                try{
+                    String jsonWeatherResponse = NetworkUtils.getResponseFromHttpUrl(weatherRequestUrl);
+                    String[] simpleJsonWeatherData = OpenWeatherJsonUtils.getSimpleWeatherStringsFromJson(MainActivity.this, jsonWeatherResponse);
+                    return simpleJsonWeatherData;
+                }catch(Exception e){
+                    e.printStackTrace();
+                    return null;
+                }
+            }
+
+            @Override
+            public void deliverResult(String[] data) {
+                mWeatherData = data;
+                super.deliverResult(data);
+            }
+
+        };
     }
 
     @Override
     public void onLoadFinished(Loader<String[]> loader, String[] data) {
+
 
     }
 
     @Override
     public void onLoaderReset(Loader<String[]> loader) {
 
+    }
+
+    private void invalidateData(){
+        mForecastAdapter.setWeatherData(null);
     }
 
     public class FetchWeatherTask extends AsyncTask<String, Void, String[]> {

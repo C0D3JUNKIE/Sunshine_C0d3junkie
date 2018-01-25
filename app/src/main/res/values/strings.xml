@@ -18,7 +18,6 @@
     <!-- - - - - - - - - - - - - -->
     <!-- Used throughout Sunshine-->
     <!-- - - - - - - - - - - - - -->
-
     <!--Used in Action Bar, and in AndroidManifest to tell the device the name of this app.-->
     <!--It's good to keep this short, so your launcher icon isn't displayed with "The greatest Wea"-->
     <!--or something similar.-->
@@ -37,7 +36,6 @@
     <!-- - - - - - - - - - - - - -->
     <!--Used by SunshineDateUtils-->
     <!-- - - - - - - - - - - - - -->
-
     <!-- For labelling today's forecast [CHAR LIMIT=15] -->
     <string name="today">Today</string>
 
@@ -53,7 +51,6 @@
     <!-- - - - - - - - - - - - - - - -->
     <!-- Used by SunshineWeatherUtils-->
     <!-- - - - - - - - - - - - - - - -->
-
     <!-- Temperature format in Celsius [CHAR LIMIT=5] -->
     <string name="format_temperature_celsius">
         <xliff:g id="temp">%1.0f</xliff:g>\u00B0C
@@ -149,4 +146,5 @@
     <!--Used by SunshinePreferences-->
     <!-- - - - - - - - - - - - - - -->
     <!--NONE-->
+
 </resources>
