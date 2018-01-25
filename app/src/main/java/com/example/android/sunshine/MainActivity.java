@@ -202,6 +202,14 @@ public class MainActivity extends AppCompatActivity implements ForecastAdapterOn
     @Override
     public void onLoadFinished(Loader<String[]> loader, String[] data) {
 
+        mLoadingIndicator.setVisibility(View.VISIBLE);
+        mForecastAdapter.setWeatherData(data);
+
+        if(null == data){
+            showErrorMessage();
+        }else{
+            showWeatherDataView();
+        }
 
     }
 
