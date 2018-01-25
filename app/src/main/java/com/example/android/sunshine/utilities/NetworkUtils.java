@@ -31,13 +31,8 @@ import java.util.Scanner;
 public final class NetworkUtils {
 
     private static final String TAG = NetworkUtils.class.getSimpleName();
-
-    private static final String DYNAMIC_WEATHER_URL =
-            "https://andfun-weather.udacity.com/weather";
-
-    private static final String STATIC_WEATHER_URL =
-            "https://andfun-weather.udacity.com/staticweather";
-
+    private static final String DYNAMIC_WEATHER_URL = "https://andfun-weather.udacity.com/weather";
+    private static final String STATIC_WEATHER_URL = "https://andfun-weather.udacity.com/staticweather";
     private static final String FORECAST_BASE_URL = STATIC_WEATHER_URL;
 
     /*

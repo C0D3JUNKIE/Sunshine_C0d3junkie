@@ -48,17 +48,13 @@ public final class OpenWeatherJsonUtils {
 
         /* Weather information. Each day's forecast info is an element of the "list" array */
         final String OWM_LIST = "list";
-
         /* All temperatures are children of the "temp" object */
         final String OWM_TEMPERATURE = "temp";
-
         /* Max temperature for the day */
         final String OWM_MAX = "max";
         final String OWM_MIN = "min";
-
         final String OWM_WEATHER = "weather";
         final String OWM_DESCRIPTION = "main";
-
         final String OWM_MESSAGE_CODE = "cod";
 
         /* String array to hold each day's weather String */
