@@ -17,8 +17,10 @@ package com.example.android.sunshine;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v4.app.LoaderManager.LoaderCallbacks;
 import android.support.v4.content.AsyncTaskLoader;
 import android.support.v4.content.Loader;
@@ -40,10 +42,11 @@ import com.example.android.sunshine.utilities.OpenWeatherJsonUtils;
 import java.net.URL;
 
 public class MainActivity extends AppCompatActivity implements ForecastAdapter.ForecastAdapterOnClickHandler,
-    LoaderCallbacks<String[]> {
+    LoaderCallbacks<String[]>, SharedPreferences.OnSharedPreferenceChangeListener {
 
     private static final String TAG = MainActivity.class.getSimpleName();
     private static final int FORECAST_LOADER_ID = 0;
+    private static boolean PREFERENCES_HAVE_BEEN_UPDATED = false;
 
     private RecyclerView mRecyclerView;
     private ForecastAdapter mForecastAdapter;
@@ -62,6 +65,8 @@ public class MainActivity extends AppCompatActivity implements ForecastAdapter.F
         mRecyclerView = (RecyclerView) findViewById(R.id.recyclerview_forecast);
         /* This TextView is used to display errors and will be hidden if there are no errors */
         mErrorMessageDisplay = (TextView) findViewById(R.id.tv_error_message_display);
+        int recyclerViewOrientation = LinearLayoutManager.VERTICAL;
+        boolean shouldReverseLayout = false;
         /*
          * LinearLayoutManager can support HORIZONTAL or VERTICAL orientations. The reverse layout
          * parameter is useful mostly for HORIZONTAL layouts that should reverse for right to left
@@ -95,6 +100,8 @@ public class MainActivity extends AppCompatActivity implements ForecastAdapter.F
         LoaderCallbacks<String[]> callback = MainActivity.this;
         Bundle bundleForLoader = null;
         getSupportLoaderManager().initLoader(loaderId, bundleForLoader, callback);
+        Log.d(TAG, "onCreate: registering preference changed listener");
+        PreferenceManager.getDefaultSharedPreferences(this).registerOnSharedPreferenceChangeListener(this);
     }
 
     @Override
@@ -246,4 +253,8 @@ public class MainActivity extends AppCompatActivity implements ForecastAdapter.F
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String s) {
+        PREFERENCES_HAVE_BEEN_UPDATED = true;
+    }
 }
