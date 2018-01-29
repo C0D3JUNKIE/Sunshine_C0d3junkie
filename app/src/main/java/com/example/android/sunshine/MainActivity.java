@@ -208,6 +208,12 @@ public class MainActivity extends AppCompatActivity implements ForecastAdapter.F
 
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        PreferenceManager.getDefaultSharedPreferences(this).unregisterOnSharedPreferenceChangeListener(this);
+    }
+
     private void invalidateData(){
         mForecastAdapter.setWeatherData(null);
     }
