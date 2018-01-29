@@ -161,6 +161,16 @@ public class MainActivity extends AppCompatActivity implements ForecastAdapter.F
         startActivity(intentToStartDetailActivity);
     }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+        if(PREFERENCES_HAVE_BEEN_UPDATED){
+            Log.d(TAG, "onStart:  Preferences were updated.");
+            getSupportLoaderManager().restartLoader(FORECAST_LOADER_ID, null, this);
+            PREFERENCES_HAVE_BEEN_UPDATED = false;
+        }
+    }
+
     /**
      * This method will make the View for the weather data visible and
      * hide the error message.
